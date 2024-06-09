@@ -1,0 +1,7 @@
+.idea
+.venv
+**/.terraform.lock.hcl
+**/.terraform
+**/provider.tf
+**/backend.tf
+**/.terragrunt-cache
