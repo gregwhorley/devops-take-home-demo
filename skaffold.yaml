@@ -1,0 +1,23 @@
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: evolve-app
+
+build:
+  cluster:
+    namespace: kaniko
+    dockerConfig:
+      secretName: docker-config-secret
+  artifacts:
+    - image: gwhorley/evolve-app
+      kaniko: {}
+deploy:
+  helm:
+    releases:
+      - name: evolve-app
+        chartPath: ./helm/evolve-app
+        namespace: evolve-app
+        createNamespace: true
+        setValueTemplates:
+          image.repository: "{{.IMAGE_REPO_gwhorley_evolve_app}}"
+          image.tag: "{{.IMAGE_TAG_gwhorley_evolve_app}}@{{.IMAGE_DIGEST_gwhorley_evolve_app}}"
